@@ -30,7 +30,7 @@
     // (渲染器寬, 渲染器高, updateStyle) 針對效能敏感的瀏覽器可調整渲染寬高
     // 例如：如果<canvas>標籤具有100%寬高時，設定setSize(window.innerWidth/2, window.innerHeight/2, false)
     // 渲染器將使用一半的分辨率進行渲染
-    renderer.setSize( window.innerWidth/2, window.innerHeight/2);
+    renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5);
     // 將渲染器添加到body中
     document.body.appendChild( renderer.domElement );
 
@@ -40,7 +40,7 @@
     // 設定材質顏色
     // 使用MeshBasicMaterial材質，顏色(十六進位)
     var material = new THREE.MeshBasicMaterial( { color: 0xffa500 } );
-    // 添加網格
+    // 添加網格(建立含材質物件)
     var cube = new THREE.Mesh( geometry, material );
     // 將物體添加到場景中(預設會在(0,0,0)座標)
     scene.add( cube );

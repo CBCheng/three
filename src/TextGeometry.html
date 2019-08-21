@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Start - First Three.js App</title>
+</head>
+<style>
+    body { margin: 0;}
+    canvas { width: 100%; height: 100% }
+</style>
+<body>
+    <div id="container"></div>
+</body>
+<script src="js/three.js"></script>
+<script src="js/checkWebGL.js"></script>
+<script>
+    var scene = new THREE.Scene();
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight);
+    document.body.appendChild( renderer.domElement );
+
+    // 設置相機位置
+    var camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 1, 500 );
+    camera.position.set(0, 0, 100);
+    camera.lookAt(0, 0, 0);
+
+    // 設定物件實體 (這裡使用的是線)
+    // var loader = new THREE.FontLoader();
+
+    // loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+        var geometry = new THREE.TextGeometry( 'Hello three.js!', {
+            font: Aria,
+            size: 80,
+            height: 5,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 10,
+            bevelSize: 8,
+            bevelSegments: 5
+        } );
+    // } );
+
+    // 設定材質顏色
+    // 線條只能使用LineBasicMaterial 或者 LineDashedMaterial
+    var material = new THREE.MeshBasicMaterial( { color: 0xffa500 } );
+
+    // // 建立含材質物件
+    var cube = new THREE.Mesh( geometry, material );
+
+    // // 將物體添加到場景中(預設會在(0,0,0)座標)
+    scene.add( cube );
+
+
+    // 檢查WebGL支援
+    if (WEBGL.isWebGLAvailable()) {
+        renderer.render( scene, camera ); //啟動渲染
+    } else {
+        var warning = WEBGL.getWebGLErrorMessage();
+        document.getElementById('container').appendChild(warning);
+    }
+</script>
+</html>

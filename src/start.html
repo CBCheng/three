@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Start - First Three.js App</title>
+</head>
+<style>
+    body { margin: 0;}
+    canvas { width: 100%; height: 100% }
+</style>
+<body>
+    <div id="container"></div>
+</body>
+<script src="js/three.js"></script>
+<script src="js/checkWebGL.js"></script>
+<script>
+    //創建場景
+    var scene = new THREE.Scene();
+
+    // 創建攝影機
+    // 使用PerspectiveCamera
+    // 參數(視野角度FOV, 長寬比, 近截面, 遠截面)
+    var camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+    // 渲染場景
+    // 使用WebGLRenderer
+    var renderer = new THREE.WebGLRenderer();
+    // (渲染器寬, 渲染器高, updateStyle) 針對效能敏感的瀏覽器可調整渲染寬高
+    // 例如：如果<canvas>標籤具有100%寬高時，設定setSize(window.innerWidth/2, window.innerHeight/2, false)
+    // 渲染器將使用一半的分辨率進行渲染
+    renderer.setSize( window.innerWidth/2, window.innerHeight/2);
+    // 將渲染器添加到body中
+    document.body.appendChild( renderer.domElement );
+
+    // 創建3D物件實體
+    // 建立一個立方體BoxGeometry，參數(長, 寬, 高)
+    var geometry = new THREE.BoxGeometry( 1, 3, 1 );
+    // 設定材質顏色
+    // 使用MeshBasicMaterial材質，顏色(十六進位)
+    var material = new THREE.MeshBasicMaterial( { color: 0xffa500 } );
+    // 添加網格
+    var cube = new THREE.Mesh( geometry, material );
+    // 將物體添加到場景中(預設會在(0,0,0)座標)
+    scene.add( cube );
+
+    // 設定攝影機距離
+    camera.position.z = 10;
+
+    // 將設定好的渲染器進行真正的渲染
+    // 使用渲染循環(render loop)或者動畫循環(animate loop)
+    var animate = function () {
+        requestAnimationFrame( animate ); // 使用requestAnimationFrame進行畫面幀數刷新循環
+
+        cube.rotation.x += 0.01; //添加動畫，每幀刷新
+        cube.rotation.y += 0.05;
+
+        renderer.render( scene, camera );
+    };
+
+    // 啟動渲染
+    // animate();
+
+    // 檢查WebGL支援
+    if (WEBGL.isWebGLAvailable()) {
+        alert('jump');
+        animate();
+    } else {
+        var warning = WEBGL.getWebGLErrorMessage();
+        document.getElementById('container').appendChild(warning);
+    }
+</script>
+</html>
